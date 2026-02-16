@@ -1,0 +1,10 @@
+{
+  "superadmin": {
+    "id": "4571fb38-289f-43b8-9686-20e1e674fdc5",
+    "username": "superadmin",
+    "password": "superadmin",
+    "tokens": 999995,
+    "isAdmin": true,
+    "createdAt": "2026-02-15T19:05:23.956Z"
+  }
+}

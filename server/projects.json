@@ -1,0 +1,421 @@
+{
+  "1411a9c8-d0c9-4956-9bdc-e9a9e3da9986": {
+    "id": "1411a9c8-d0c9-4956-9bdc-e9a9e3da9986",
+    "name": "т1",
+    "userId": "4571fb38-289f-43b8-9686-20e1e674fdc5",
+    "pdfPath": "C:\\working\\git\\repos\\valentin\\2026-proj\\constr-planer\\public\\uploads\\e650810a-711c-4271-aafd-d8d7171edc0d-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+    "pageCount": 31,
+    "pages": [
+      {
+        "page": 1,
+        "image": "/uploads/e650810a-711c-4271-aafd-d8d7171edc0d-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 1
+      },
+      {
+        "page": 2,
+        "image": "/uploads/e650810a-711c-4271-aafd-d8d7171edc0d-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 2
+      },
+      {
+        "page": 3,
+        "image": "/uploads/e650810a-711c-4271-aafd-d8d7171edc0d-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 3
+      },
+      {
+        "page": 4,
+        "image": "/uploads/e650810a-711c-4271-aafd-d8d7171edc0d-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 4
+      },
+      {
+        "page": 5,
+        "image": "/uploads/e650810a-711c-4271-aafd-d8d7171edc0d-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 5
+      },
+      {
+        "page": 6,
+        "image": "/uploads/e650810a-711c-4271-aafd-d8d7171edc0d-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 6
+      },
+      {
+        "page": 7,
+        "image": "/uploads/e650810a-711c-4271-aafd-d8d7171edc0d-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 7
+      },
+      {
+        "page": 8,
+        "image": "/uploads/e650810a-711c-4271-aafd-d8d7171edc0d-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 8
+      },
+      {
+        "page": 9,
+        "image": "/uploads/e650810a-711c-4271-aafd-d8d7171edc0d-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 9
+      },
+      {
+        "page": 10,
+        "image": "/uploads/e650810a-711c-4271-aafd-d8d7171edc0d-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 10
+      },
+      {
+        "page": 11,
+        "image": "/uploads/e650810a-711c-4271-aafd-d8d7171edc0d-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 11
+      },
+      {
+        "page": 12,
+        "image": "/uploads/e650810a-711c-4271-aafd-d8d7171edc0d-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 12
+      },
+      {
+        "page": 13,
+        "image": "/uploads/e650810a-711c-4271-aafd-d8d7171edc0d-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 13
+      },
+      {
+        "page": 14,
+        "image": "/uploads/e650810a-711c-4271-aafd-d8d7171edc0d-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 14
+      },
+      {
+        "page": 15,
+        "image": "/uploads/e650810a-711c-4271-aafd-d8d7171edc0d-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 15
+      },
+      {
+        "page": 16,
+        "image": "/uploads/e650810a-711c-4271-aafd-d8d7171edc0d-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 16
+      },
+      {
+        "page": 17,
+        "image": "/uploads/e650810a-711c-4271-aafd-d8d7171edc0d-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 17
+      },
+      {
+        "page": 18,
+        "image": "/uploads/e650810a-711c-4271-aafd-d8d7171edc0d-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 18
+      },
+      {
+        "page": 19,
+        "image": "/uploads/e650810a-711c-4271-aafd-d8d7171edc0d-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 19
+      },
+      {
+        "page": 20,
+        "image": "/uploads/e650810a-711c-4271-aafd-d8d7171edc0d-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 20
+      },
+      {
+        "page": 21,
+        "image": "/uploads/e650810a-711c-4271-aafd-d8d7171edc0d-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 21
+      },
+      {
+        "page": 22,
+        "image": "/uploads/e650810a-711c-4271-aafd-d8d7171edc0d-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 22
+      },
+      {
+        "page": 23,
+        "image": "/uploads/e650810a-711c-4271-aafd-d8d7171edc0d-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 23
+      },
+      {
+        "page": 24,
+        "image": "/uploads/e650810a-711c-4271-aafd-d8d7171edc0d-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 24
+      },
+      {
+        "page": 25,
+        "image": "/uploads/e650810a-711c-4271-aafd-d8d7171edc0d-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 25
+      },
+      {
+        "page": 26,
+        "image": "/uploads/e650810a-711c-4271-aafd-d8d7171edc0d-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 26
+      },
+      {
+        "page": 27,
+        "image": "/uploads/e650810a-711c-4271-aafd-d8d7171edc0d-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 27
+      },
+      {
+        "page": 28,
+        "image": "/uploads/e650810a-711c-4271-aafd-d8d7171edc0d-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 28
+      },
+      {
+        "page": 29,
+        "image": "/uploads/e650810a-711c-4271-aafd-d8d7171edc0d-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 29
+      },
+      {
+        "page": 30,
+        "image": "/uploads/e650810a-711c-4271-aafd-d8d7171edc0d-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 30
+      },
+      {
+        "page": 31,
+        "image": "/uploads/e650810a-711c-4271-aafd-d8d7171edc0d-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 31
+      }
+    ],
+    "status": "processed",
+    "createdAt": "2026-02-15T19:16:21.186Z",
+    "selectedPage": 19,
+    "analysis": {
+      "walls": [
+        {
+          "id": 1,
+          "length": 5.2,
+          "type": "new",
+          "x1": 100,
+          "y1": 100,
+          "x2": 620,
+          "y2": 100
+        },
+        {
+          "id": 2,
+          "length": 3.8,
+          "type": "new",
+          "x1": 620,
+          "y1": 100,
+          "x2": 620,
+          "y2": 480
+        },
+        {
+          "id": 3,
+          "length": 5.2,
+          "type": "new",
+          "x1": 100,
+          "y1": 480,
+          "x2": 620,
+          "y2": 480
+        },
+        {
+          "id": 4,
+          "length": 3.8,
+          "type": "existing",
+          "x1": 100,
+          "y1": 100,
+          "x2": 100,
+          "y2": 480
+        }
+      ],
+      "totalNewWallLength": 14.2,
+      "rooms": [
+        {
+          "id": 1,
+          "area": 19.76,
+          "name": "Комната 1"
+        }
+      ],
+      "pilesNeeded": 8,
+      "pileDistance": "2",
+      "objects3D": [
+        {
+          "type": "wall",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "width": 5.2,
+          "height": 2.7,
+          "depth": 0.2,
+          "color": "#FF6B6B"
+        },
+        {
+          "type": "wall",
+          "x": 5.2,
+          "y": 0,
+          "z": 0,
+          "width": 0.2,
+          "height": 2.7,
+          "depth": 3.8,
+          "color": "#FF6B6B"
+        },
+        {
+          "type": "wall",
+          "x": 0,
+          "y": 0,
+          "z": 3.8,
+          "width": 5.2,
+          "height": 2.7,
+          "depth": 0.2,
+          "color": "#FF6B6B"
+        }
+      ]
+    },
+    "pileOptions": {
+      "installPiles": true,
+      "pileDistance": 2
+    }
+  },
+  "fb015b6c-7efd-444c-912e-82a8eea688c2": {
+    "id": "fb015b6c-7efd-444c-912e-82a8eea688c2",
+    "name": "т2",
+    "userId": "4571fb38-289f-43b8-9686-20e1e674fdc5",
+    "pdfPath": "C:\\working\\git\\repos\\valentin\\2026-proj\\constr-planer\\public\\uploads\\2ccabce7-0204-4a30-be7e-1d78d5fcc266-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+    "pageCount": 31,
+    "pages": [
+      {
+        "page": 1,
+        "image": "/uploads/2ccabce7-0204-4a30-be7e-1d78d5fcc266-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 1
+      },
+      {
+        "page": 2,
+        "image": "/uploads/2ccabce7-0204-4a30-be7e-1d78d5fcc266-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 2
+      },
+      {
+        "page": 3,
+        "image": "/uploads/2ccabce7-0204-4a30-be7e-1d78d5fcc266-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 3
+      },
+      {
+        "page": 4,
+        "image": "/uploads/2ccabce7-0204-4a30-be7e-1d78d5fcc266-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 4
+      },
+      {
+        "page": 5,
+        "image": "/uploads/2ccabce7-0204-4a30-be7e-1d78d5fcc266-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 5
+      },
+      {
+        "page": 6,
+        "image": "/uploads/2ccabce7-0204-4a30-be7e-1d78d5fcc266-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 6
+      },
+      {
+        "page": 7,
+        "image": "/uploads/2ccabce7-0204-4a30-be7e-1d78d5fcc266-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 7
+      },
+      {
+        "page": 8,
+        "image": "/uploads/2ccabce7-0204-4a30-be7e-1d78d5fcc266-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 8
+      },
+      {
+        "page": 9,
+        "image": "/uploads/2ccabce7-0204-4a30-be7e-1d78d5fcc266-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 9
+      },
+      {
+        "page": 10,
+        "image": "/uploads/2ccabce7-0204-4a30-be7e-1d78d5fcc266-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 10
+      },
+      {
+        "page": 11,
+        "image": "/uploads/2ccabce7-0204-4a30-be7e-1d78d5fcc266-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 11
+      },
+      {
+        "page": 12,
+        "image": "/uploads/2ccabce7-0204-4a30-be7e-1d78d5fcc266-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 12
+      },
+      {
+        "page": 13,
+        "image": "/uploads/2ccabce7-0204-4a30-be7e-1d78d5fcc266-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 13
+      },
+      {
+        "page": 14,
+        "image": "/uploads/2ccabce7-0204-4a30-be7e-1d78d5fcc266-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 14
+      },
+      {
+        "page": 15,
+        "image": "/uploads/2ccabce7-0204-4a30-be7e-1d78d5fcc266-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 15
+      },
+      {
+        "page": 16,
+        "image": "/uploads/2ccabce7-0204-4a30-be7e-1d78d5fcc266-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 16
+      },
+      {
+        "page": 17,
+        "image": "/uploads/2ccabce7-0204-4a30-be7e-1d78d5fcc266-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 17
+      },
+      {
+        "page": 18,
+        "image": "/uploads/2ccabce7-0204-4a30-be7e-1d78d5fcc266-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 18
+      },
+      {
+        "page": 19,
+        "image": "/uploads/2ccabce7-0204-4a30-be7e-1d78d5fcc266-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 19
+      },
+      {
+        "page": 20,
+        "image": "/uploads/2ccabce7-0204-4a30-be7e-1d78d5fcc266-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 20
+      },
+      {
+        "page": 21,
+        "image": "/uploads/2ccabce7-0204-4a30-be7e-1d78d5fcc266-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 21
+      },
+      {
+        "page": 22,
+        "image": "/uploads/2ccabce7-0204-4a30-be7e-1d78d5fcc266-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 22
+      },
+      {
+        "page": 23,
+        "image": "/uploads/2ccabce7-0204-4a30-be7e-1d78d5fcc266-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 23
+      },
+      {
+        "page": 24,
+        "image": "/uploads/2ccabce7-0204-4a30-be7e-1d78d5fcc266-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 24
+      },
+      {
+        "page": 25,
+        "image": "/uploads/2ccabce7-0204-4a30-be7e-1d78d5fcc266-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 25
+      },
+      {
+        "page": 26,
+        "image": "/uploads/2ccabce7-0204-4a30-be7e-1d78d5fcc266-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 26
+      },
+      {
+        "page": 27,
+        "image": "/uploads/2ccabce7-0204-4a30-be7e-1d78d5fcc266-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 27
+      },
+      {
+        "page": 28,
+        "image": "/uploads/2ccabce7-0204-4a30-be7e-1d78d5fcc266-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 28
+      },
+      {
+        "page": 29,
+        "image": "/uploads/2ccabce7-0204-4a30-be7e-1d78d5fcc266-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 29
+      },
+      {
+        "page": 30,
+        "image": "/uploads/2ccabce7-0204-4a30-be7e-1d78d5fcc266-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 30
+      },
+      {
+        "page": 31,
+        "image": "/uploads/2ccabce7-0204-4a30-be7e-1d78d5fcc266-ÐÐ  ÐÐ¾Ð²Ð¾Ð¾ÑÑÐ°Ð¿Ð¾Ð²ÑÐºÐ°Ñ 7Ðº1(27.01.26).pdf",
+        "pageNum": 31
+      }
+    ],
+    "status": "uploaded",
+    "createdAt": "2026-02-16T21:51:30.259Z"
+  }
+}
