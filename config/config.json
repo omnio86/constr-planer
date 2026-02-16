@@ -1,0 +1,12 @@
+{
+  "jwtSecret": "your-secret-key-for-jwt-tokens",
+  "superAdmin": {
+    "username": "superadmin",
+    "password": "superadmin"
+  },
+  "nobanana": {
+    "apiKey": "your-nobanana-api-key",
+    "apiUrl": "https://api.nobanana.ai/v1"
+  },
+  "defaultTokens": 10
+}

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Constr Planer - Планировщик строительных проектов</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    </script>
+</head>
+<body>
+    <!-- Страница авторизации -->
+    <div id="auth-page" class="page">
+        <div class="auth-container">
+            <div class="auth-box">
+                <div class="auth-header">
+                    <h1>Constr Planer</h1>
+                    <p>Планировщик строительных проектов с AI-анализом чертежей</p>
+                </div>
+                
+                <div class="auth-tabs">
+                    <button class="tab-btn active" data-tab="login">Вход</button>
+                    <button class="tab-btn" data-tab="register">Регистрация</button>
+                </div>
+                
+                <!-- Форма входа -->
+                <form id="login-form" class="auth-form">
+                    <div class="form-group">
+                        <label for="login-username">Логин</label>
+                        <input type="text" id="login-username" required placeholder="Введите логин">
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Пароль</label>
+                        <input type="password" id="login-password" required placeholder="Введите пароль">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Войти</button>
+                    <div class="hint">
+                        <small>Демо: логин "superadmin", пароль "superadmin"</small>
+                    </div>
+                </form>
+                
+                <!-- Форма регистрации -->
+                <form id="register-form" class="auth-form hidden">
+                    <div class="form-group">
+                        <label for="reg-username">Логин</label>
+                        <input type="text" id="reg-username" required placeholder="Придумайте логин">
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-password">Пароль</label>
+                        <input type="password" id="reg-password" required placeholder="Придумайте пароль">
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-password-confirm">Подтвердите пароль</label>
+                        <input type="password" id="reg-password-confirm" required placeholder="Повторите пароль">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Зарегистрироваться</button>
+                </form>
+                
+                <div id="auth-message" class="message"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Главная страница (после авторизации) -->
+    <div id="main-page" class="page hidden">
+        <header class="header">
+            <div class="header-left">
+                <h1>Constr Planer</h1>
+            </div>
+            <div class="header-center">
+                <nav class="nav-tabs">
+                    <button class="nav-tab active" data-tab="dashboard">Дашборд</button>
+                    <button class="nav-tab" data-tab="profile">Личный кабинет</button>
+                </nav>
+            </div>
+            <div class="header-right">
+                <span class="tokens-info">
+                    Токены: <strong id="user-tokens">0</strong>
+                </span>
+                <span id="user-name"></span>
+                <button id="logout-btn" class="btn btn-secondary">Выйти</button>
+            </div>
+        </header>
+
+        <!-- Дашборд -->
+        <div id="dashboard-tab" class="tab-content active">
+            <div class="container">
+                <!-- Список проектов -->
+                <div class="projects-section">
+                    <div class="section-header">
+                        <h2>Мои проекты</h2>
+                        <button id="new-project-btn" class="btn btn-primary">+ Новый проект</button>
+                    </div>
+                    <div id="projects-list" class="projects-list">
+                        <!-- Проекты загружаются через JS -->
+                    </div>
+                </div>
+
+                <!-- Создание нового проекта -->
+                <div id="new-project-form" class="project-form hidden">
+                    <div class="card">
+                        <h3>Создание нового проекта</h3>
+                        <div class="form-group">
+                            <label for="project-name">Название проекта</label>
+                            <input type="text" id="project-name" placeholder="Например: Ремонт квартиры №45">
+                        </div>
+                        <div class="form-group">
+                            <label for="project-file">Загрузите PDF с чертежом</label>
+                            <input type="file" id="project-file" accept=".pdf" class="file-input">
+                            <div class="file-info">
+                                <small>Поддерживаются PDF файлы с чертежами зданий и помещений</small>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button id="upload-project-btn" class="btn btn-primary">Загрузить проект</button>
+                            <button id="cancel-project-btn" class="btn btn-secondary">Отмена</button>
+                        </div>
+                        <div id="upload-progress" class="progress hidden">
+                            <div class="progress-bar"></div>
+                            <span class="progress-text">Загрузка...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Обработка проекта -->
+                <div id="project-processing" class="project-processing hidden">
+                    <div class="card">
+                        <h3>Обработка проекта: <span id="processing-project-name"></span></h3>
+                        
+                        <!-- Выбор страницы -->
+                        <div class="page-selection">
+                            <h4>Выберите страницу с чертежом</h4>
+                            <div class="carousel-container">
+                                <button id="prev-page-btn" class="carousel-btn carousel-prev" disabled>
+                                    ←
+                                </button>
+                                <div id="pages-preview" class="pages-grid">
+                                    <!-- Превью страниц -->
+                                </div>
+                                <button id="next-page-btn" class="carousel-btn carousel-next" disabled>
+                                    →
+                                </button>
+                            </div>
+                            <div class="page-indicator">
+                                Страница <span id="current-page-num">1</span> из <span id="total-pages">1</span>
+                            </div>
+                        </div>
+
+                        <!-- Параметры обработки -->
+                        <div class="processing-options">
+                            <h4>Параметры обработки</h4>
+                            <div class="options-grid">
+                                <div class="option-item">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="install-piles">
+                                        <span>Установить сваи</span>
+                                    </label>
+                                </div>
+                                <div class="option-item">
+                                    <label for="pile-distance">Расстояние между сваями (м)</label>
+                                    <input type="number" id="pile-distance" value="2" min="1" max="10" step="0.5">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button id="start-processing-btn" class="btn btn-primary" disabled>
+                                Начать обработку (2 токена)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Результаты обработки -->
+                <div id="project-results" class="project-results hidden">
+                    <div class="card">
+                        <h3>Результаты обработки</h3>
+                        
+                        <!-- Статистика -->
+                        <div class="results-stats">
+                            <div class="stat-card">
+                                <span class="stat-label">Новых стен</span>
+                                <span id="stats-wall-length" class="stat-value">0 м</span>
+                            </div>
+                            <div class="stat-card" id="stats-piles-card" style="display: none;">
+                                <span class="stat-label">Требуется свай</span>
+                                <span id="stats-piles-count" class="stat-value">0 шт</span>
+                            </div>
+                        </div>
+
+                        <!-- 3D Визуализация -->
+                        <div class="visualization-section">
+                            <h4>3D Визуализация</h4>
+                            <div id="3d-container" class="visualization-3d"></div>
+                            <div class="visualization-legend">
+                                <div class="legend-item">
+                                    <span class="legend-color" style="background: #FF6B6B;"></span>
+                                    <span>Новые стены</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color" style="background: #95A5A6;"></span>
+                                    <span>Существующие стены</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Экспорт -->
+                        <div class="export-section">
+                            <h4>Экспорт сметы</h4>
+                            <div class="export-buttons">
+                                <button id="export-excel-btn" class="btn btn-success">
+                                    📊 Скачать Excel
+                                </button>
+                                <button id="export-pdf-btn" class="btn btn-danger">
+                                    📄 Скачать PDF
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button id="back-to-projects-btn" class="btn btn-secondary">← К проектам</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Личный кабинет -->
+        <div id="profile-tab" class="tab-content">
+            <div class="container">
+                <div class="profile-grid">
+                    <!-- Информация о пользователе -->
+                    <div class="card">
+                        <h3>Информация о пользователе</h3>
+                        <div class="profile-info">
+                            <div class="info-row">
+                                <span class="info-label">Логин:</span>
+                                <span id="profile-username" class="info-value"></span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Текущий баланс токенов:</span>
+                                <span id="profile-tokens" class="info-value highlight"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Пополнение токенов -->
+                    <div class="card">
+                        <h3>Пополнение токенов</h3>
+                        <p class="card-description">
+                            Токены используются для обработки чертежей и генерации смет.
+                            <br>Загрузка PDF: 1 токен
+                            <br>Обработка чертежа: 2 токена
+                        </p>
+                        
+                        <div class="token-packages">
+                            <div class="package-card" data-tokens="10">
+                                <div class="package-tokens">10 токенов</div>
+                                <div class="package-price">500 ₽</div>
+                                <button class="btn btn-primary btn-buy">Купить</button>
+                            </div>
+                            <div class="package-card popular" data-tokens="25">
+                                <div class="package-badge">Выгодно</div>
+                                <div class="package-tokens">25 токенов</div>
+                                <div class="package-price">1000 ₽</div>
+                                <button class="btn btn-primary btn-buy">Купить</button>
+                            </div>
+                            <div class="package-card" data-tokens="50">
+                                <div class="package-tokens">50 токенов</div>
+                                <div class="package-price">1800 ₽</div>
+                                <button class="btn btn-primary btn-buy">Купить</button>
+                            </div>
+                            <div class="package-card" data-tokens="100">
+                                <div class="package-tokens">100 токенов</div>
+                                <div class="package-price">3000 ₽</div>
+                                <button class="btn btn-primary btn-buy">Купить</button>
+                            </div>
+                        </div>
+
+                        <div id="payment-message" class="message"></div>
+                    </div>
+
+                    <!-- История операций -->
+                    <div class="card full-width">
+                        <h3>История операций</h3>
+                        <div class="operations-list">
+                            <div class="operation-item">
+                                <span class="operation-type">Регистрация</span>
+                                <span class="operation-tokens positive">+10 токенов</span>
+                                <span class="operation-date">При создании аккаунта</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
