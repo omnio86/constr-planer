@@ -1,0 +1,21 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://x-access-token:ghs_SyWFxIEDVI9Nlblk0HNXyfZF0DTpSN0NMRwl@github.com/omnio86/constr-planer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/omnio86/constr-planer/issues"
+  },
+  "homepage": "https://github.com/omnio86/constr-planer#readme"
+}

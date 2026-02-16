@@ -651,16 +651,33 @@ async function exportExcel() {
             }
         );
         
-        if (!response.ok) throw new Error('Ошибка экспорта');
+        if (!response.ok) {
+            let errorMessage = 'Ошибка экспорта';
+            try {
+                const contentType = response.headers.get('content-type');
+                if (contentType && contentType.includes('application/json')) {
+                    const errorData = await response.json();
+                    errorMessage = errorData.error || errorMessage;
+                } else {
+                    errorMessage = `Ошибка сервера: ${response.status} ${response.statusText}`;
+                }
+            } catch (e) {
+                errorMessage = `Ошибка сервера: ${response.status}`;
+            }
+            throw new Error(errorMessage);
+        }
         
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
         a.download = `smeta_${state.currentProject.name}.xlsx`;
+        document.body.appendChild(a);
         a.click();
+        document.body.removeChild(a);
         window.URL.revokeObjectURL(url);
     } catch (error) {
+        console.error('Excel export error:', error);
         alert('Ошибка при скачивании Excel: ' + error.message);
     }
 }
@@ -676,16 +693,33 @@ async function exportPdf() {
             }
         );
         
-        if (!response.ok) throw new Error('Ошибка экспорта');
+        if (!response.ok) {
+            let errorMessage = 'Ошибка экспорта';
+            try {
+                const contentType = response.headers.get('content-type');
+                if (contentType && contentType.includes('application/json')) {
+                    const errorData = await response.json();
+                    errorMessage = errorData.error || errorMessage;
+                } else {
+                    errorMessage = `Ошибка сервера: ${response.status} ${response.statusText}`;
+                }
+            } catch (e) {
+                errorMessage = `Ошибка сервера: ${response.status}`;
+            }
+            throw new Error(errorMessage);
+        }
         
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
         a.download = `smeta_${state.currentProject.name}.pdf`;
+        document.body.appendChild(a);
         a.click();
+        document.body.removeChild(a);
         window.URL.revokeObjectURL(url);
     } catch (error) {
+        console.error('PDF export error:', error);
         alert('Ошибка при скачивании PDF: ' + error.message);
     }
 }

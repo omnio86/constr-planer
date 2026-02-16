@@ -329,11 +329,24 @@ app.get('/api/projects', authMiddleware, (req, res) => {
 // Генерация Excel сметы
 app.get('/api/projects/:projectId/export/excel', authMiddleware, async (req, res) => {
   try {
+    console.log(`[Excel Export] Starting export for project: ${req.params.projectId}`);
+    
     const projects = loadData(PROJECTS_FILE);
     const project = projects[req.params.projectId];
     
-    if (!project || !project.analysis) {
-      return res.status(404).json({ error: 'Проект или анализ не найден' });
+    if (!project) {
+      console.log(`[Excel Export] Project not found: ${req.params.projectId}`);
+      return res.status(404).json({ error: 'Проект не найден' });
+    }
+    
+    if (!project.analysis) {
+      console.log(`[Excel Export] Project not processed: ${req.params.projectId}`);
+      return res.status(400).json({ error: 'Проект не обработан. Сначала выполните анализ чертежа.' });
+    }
+    
+    if (!project.analysis.walls || !Array.isArray(project.analysis.walls)) {
+      console.log(`[Excel Export] Invalid analysis data for project: ${req.params.projectId}`);
+      return res.status(400).json({ error: 'Некорректные данные анализа проекта' });
     }
     
     const workbook = new ExcelJS.Workbook();
@@ -433,23 +446,46 @@ app.get('/api/projects/:projectId/export/excel', authMiddleware, async (req, res
     
     await workbook.xlsx.write(res);
     res.end();
+    
+    console.log(`[Excel Export] Successfully exported project: ${req.params.projectId}`);
   } catch (err) {
-    console.error('Ошибка генерации Excel:', err);
-    res.status(500).json({ error: 'Ошибка генерации Excel' });
+    console.error('[Excel Export] Error:', err.message);
+    console.error('[Excel Export] Stack:', err.stack);
+    res.status(500).json({ error: 'Ошибка генерации Excel: ' + err.message });
   }
 });
 
 // Генерация PDF сметы
 app.get('/api/projects/:projectId/export/pdf', authMiddleware, async (req, res) => {
+  let browser = null;
   try {
+    console.log(`[PDF Export] Starting export for project: ${req.params.projectId}`);
+    
     const projects = loadData(PROJECTS_FILE);
     const project = projects[req.params.projectId];
     
-    if (!project || !project.analysis) {
-      return res.status(404).json({ error: 'Проект или анализ не найден' });
+    if (!project) {
+      console.log(`[PDF Export] Project not found: ${req.params.projectId}`);
+      return res.status(404).json({ error: 'Проект не найден' });
     }
     
-    const browser = await puppeteer.launch();
+    if (!project.analysis) {
+      console.log(`[PDF Export] Project not processed: ${req.params.projectId}`);
+      return res.status(400).json({ error: 'Проект не обработан. Сначала выполните анализ чертежа.' });
+    }
+    
+    console.log(`[PDF Export] Launching puppeteer...`);
+    browser = await puppeteer.launch({
+      headless: 'new',
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-accelerated-2d-canvas',
+        '--disable-gpu'
+      ]
+    });
+    
     const page = await browser.newPage();
     
     const wallPrice = 3500;
@@ -555,14 +591,20 @@ app.get('/api/projects/:projectId/export/pdf', authMiddleware, async (req, res) 
     
     await page.setContent(html, { waitUntil: 'networkidle0' });
     const pdf = await page.pdf({ format: 'A4', printBackground: true });
-    await browser.close();
     
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', `attachment; filename="smeta_${project.name}.pdf"`);
     res.send(pdf);
+    
+    console.log(`[PDF Export] Successfully exported project: ${req.params.projectId}`);
   } catch (err) {
-    console.error('Ошибка генерации PDF:', err);
-    res.status(500).json({ error: 'Ошибка генерации PDF' });
+    console.error('[PDF Export] Error:', err.message);
+    console.error('[PDF Export] Stack:', err.stack);
+    res.status(500).json({ error: 'Ошибка генерации PDF: ' + err.message });
+  } finally {
+    if (browser) {
+      await browser.close();
+    }
   }
 });
 
