@@ -360,8 +360,11 @@ async function uploadProject() {
         hideNewProjectForm();
         
         // Открываем проект для обработки
-        state.currentProject = data;
-        openProjectForProcessing(data);
+        state.currentProject = {
+            ...data,
+            id: data.projectId
+        };
+        openProjectForProcessing(state.currentProject);
         
     } catch (error) {
         alert(error.message);
