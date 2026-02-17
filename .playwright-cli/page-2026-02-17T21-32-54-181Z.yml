@@ -1,0 +1,37 @@
+- generic [ref=e21]:
+  - banner [ref=e22]:
+    - heading "Constr Planer" [level=1] [ref=e24]
+    - navigation [ref=e26]:
+      - button "Проекты" [ref=e27] [cursor=pointer]
+      - button "Личный кабинет" [ref=e28] [cursor=pointer]
+    - generic [ref=e29]:
+      - generic [ref=e30]:
+        - text: "Токены:"
+        - strong [ref=e31]: "999995"
+      - generic [ref=e32]: superadmin
+      - button "Выйти" [ref=e33] [cursor=pointer]
+  - generic [ref=e36]:
+    - generic [ref=e37]:
+      - heading "Мои проекты" [level=2] [ref=e38]
+      - button "+ Новый проект" [ref=e39] [cursor=pointer]
+    - generic [ref=e40]:
+      - generic [ref=e41] [cursor=pointer]:
+        - generic [ref=e42]:
+          - heading "т1" [level=4] [ref=e43]
+          - generic [ref=e44]: ✓ Обработан
+        - generic [ref=e45]:
+          - paragraph [ref=e46]: "Страниц: 31"
+          - paragraph [ref=e47]: "Создан: 15.02.2026"
+        - generic [ref=e48]:
+          - button "Смотреть результаты" [ref=e49]
+          - button "Удалить" [ref=e50]
+      - generic [ref=e51] [cursor=pointer]:
+        - generic [ref=e52]:
+          - heading "т2" [level=4] [ref=e53]
+          - generic [ref=e54]: ⏳ Загружен
+        - generic [ref=e55]:
+          - paragraph [ref=e56]: "Страниц: 31"
+          - paragraph [ref=e57]: "Создан: 16.02.2026"
+        - generic [ref=e58]:
+          - button "Обработать" [ref=e59]
+          - button "Удалить" [ref=e60]

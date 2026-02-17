@@ -1,0 +1,35 @@
+- generic [ref=e21]:
+  - banner [ref=e22]:
+    - heading "Constr Planer" [level=1] [ref=e24]
+    - navigation [ref=e26]:
+      - button "Проекты" [ref=e27] [cursor=pointer]
+      - button "Личный кабинет" [ref=e28] [cursor=pointer]
+    - generic [ref=e29]:
+      - generic [ref=e30]:
+        - text: "Токены:"
+        - strong [ref=e31]: "999995"
+      - generic [ref=e32]: superadmin
+      - button "Выйти" [ref=e33] [cursor=pointer]
+  - generic [ref=e75]:
+    - 'heading "Обработка проекта: т2" [level=3] [ref=e76]'
+    - generic [ref=e77]:
+      - heading "Выберите страницу с чертежом" [level=4] [ref=e78]
+      - generic [ref=e79]:
+        - button "←" [disabled] [ref=e80]
+        - generic [ref=e82]:
+          - paragraph [ref=e83]: "Ошибка загрузки превью PDF: Missing PDF \"http://localhost:3000/uploads/2ccabce7-0204-4a30-be7e-1d78d5fcc266-%C3%90%C2%90%C3%90%C2%A0%20%C3%90%C2%9D%C3%90%C2%BE%C3%90%C2%B2%C3%90%C2%BE%C3%90%C2%BE%C3%91%C2%81%C3%91%C2%82%C3%90%C2%B0%C3%90%C2%BF%C3%90%C2%BE%C3%90%C2%B2%C3%91%C2%81%C3%90%C2%BA%C3%90%C2%B0%C3%91%C2%8F%207%C3%90%C2%BA1(27.01.26).pdf\"."
+          - paragraph [ref=e84]: Пожалуйста, попробуйте обновить страницу
+        - button "→" [disabled] [ref=e85]
+      - generic [ref=e86]: Страница 1 из 1
+    - generic [ref=e87]:
+      - heading "Параметры обработки" [level=4] [ref=e88]
+      - generic [ref=e89]:
+        - generic [ref=e91] [cursor=pointer]:
+          - checkbox "Установить сваи" [ref=e92]
+          - generic [ref=e93]: Установить сваи
+        - generic [ref=e94]:
+          - generic [ref=e95]: Расстояние между сваями (м)
+          - spinbutton "Расстояние между сваями (м)" [ref=e96]: "2"
+    - generic [ref=e97]:
+      - button "Начать обработку (2 токена)" [disabled] [ref=e98] [cursor=pointer]
+      - button "Назад" [ref=e99] [cursor=pointer]

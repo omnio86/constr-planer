@@ -1,0 +1,26 @@
+- generic [ref=e21]:
+  - banner [ref=e22]:
+    - heading "Constr Planer" [level=1] [ref=e24]
+    - navigation [ref=e26]:
+      - button "Проекты" [ref=e27] [cursor=pointer]
+      - button "Личный кабинет" [ref=e28] [cursor=pointer]
+    - generic [ref=e29]:
+      - generic [ref=e30]:
+        - text: "Токены:"
+        - strong [ref=e31]: "999995"
+      - generic [ref=e32]: superadmin
+      - button "Выйти" [ref=e33] [cursor=pointer]
+  - generic [ref=e62]:
+    - heading "Создание нового проекта" [level=3] [ref=e63]
+    - generic [ref=e64]:
+      - generic [ref=e65]: Название проекта
+      - textbox "Название проекта" [ref=e66]:
+        - /placeholder: "Например: Ремонт квартиры №45"
+        - text: Test Project
+    - generic [ref=e67]:
+      - generic [ref=e68]: Загрузите PDF с чертежом
+      - button "Загрузите PDF с чертежом" [active] [ref=e69] [cursor=pointer]
+      - generic [ref=e70]: Поддерживаются PDF файлы с чертежами зданий и помещений
+    - generic [ref=e71]:
+      - button "Загрузить проект" [ref=e72] [cursor=pointer]
+      - button "Назад" [ref=e73] [cursor=pointer]
