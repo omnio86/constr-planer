@@ -230,7 +230,7 @@ function renderProjects(projects) {
         `;
         return;
     }
-    
+
     elements.projectsList.innerHTML = projects.map(project => `
         <div class="project-card" data-id="${project.id}">
             <div class="project-card-header">
@@ -244,14 +244,15 @@ function renderProjects(projects) {
                 <p>Создан: ${new Date(project.createdAt).toLocaleDateString('ru-RU')}</p>
             </div>
             <div class="project-actions">
-                ${project.status === 'processed' 
+                ${project.status === 'processed'
                     ? `<button class="btn btn-primary btn-view" data-id="${project.id}">Смотреть результаты</button>`
                     : `<button class="btn btn-primary btn-process" data-id="${project.id}">Обработать</button>`
                 }
+                <button class="btn btn-danger btn-delete" data-id="${project.id}">Удалить</button>
             </div>
         </div>
     `).join('');
-    
+
     // Обработчики
     document.querySelectorAll('.project-card').forEach(card => {
         card.addEventListener('click', (e) => {
@@ -262,7 +263,7 @@ function renderProjects(projects) {
             }
         });
     });
-    
+
     document.querySelectorAll('.btn-view').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -270,7 +271,7 @@ function renderProjects(projects) {
             if (project) showResults(project);
         });
     });
-    
+
     document.querySelectorAll('.btn-process').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -278,6 +279,30 @@ function renderProjects(projects) {
             if (project) openProject(project);
         });
     });
+
+    document.querySelectorAll('.btn-delete').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const project = projects.find(p => p.id === btn.dataset.id);
+            if (project) deleteProject(project.id);
+        });
+    });
+}
+
+async function deleteProject(projectId) {
+    if (!confirm('Вы уверены, что хотите удалить этот проект? Это действие нельзя отменить.')) {
+        return;
+    }
+
+    try {
+        await api(`/projects/${projectId}`, {
+            method: 'DELETE'
+        });
+
+        loadProjects();
+    } catch (error) {
+        alert('Ошибка при удалении проекта: ' + error.message);
+    }
 }
 
 function showNewProjectForm() {
