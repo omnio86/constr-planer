@@ -816,7 +816,12 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Вкладки главной страницы
     document.querySelectorAll('.nav-tab').forEach(tab => {
-        tab.addEventListener('click', () => switchMainTab(tab.dataset.tab));
+        tab.addEventListener('click', () => {
+            if (tab.dataset.tab === 'dashboard') {
+                backToProjects();
+            }
+            switchMainTab(tab.dataset.tab);
+        });
     });
     
     // Новый проект
@@ -831,6 +836,9 @@ document.addEventListener('DOMContentLoaded', () => {
     elements.exportExcelBtn.addEventListener('click', exportExcel);
     elements.exportPdfBtn.addEventListener('click', exportPdf);
     elements.backToProjectsBtn.addEventListener('click', backToProjects);
+    
+    // Назад со страницы обработки
+    document.getElementById('back-from-processing-btn').addEventListener('click', backToProjects);
     
     // Покупка токенов
     document.querySelectorAll('.package-card').forEach(card => {
