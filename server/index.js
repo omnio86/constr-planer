@@ -326,6 +326,36 @@ app.get('/api/projects', authMiddleware, (req, res) => {
   res.json(userProjects);
 });
 
+// Удаление проекта
+app.delete('/api/projects/:projectId', authMiddleware, (req, res) => {
+  try {
+    const projects = loadData(PROJECTS_FILE);
+    const project = projects[req.params.projectId];
+
+    if (!project) {
+      return res.status(404).json({ error: 'Проект не найден' });
+    }
+
+    if (project.userId !== req.user.userId && !req.user.isAdmin) {
+      return res.status(403).json({ error: 'Нет доступа' });
+    }
+
+    // Удаляем PDF файл
+    if (project.pdfPath && fs.existsSync(project.pdfPath)) {
+      fs.unlinkSync(project.pdfPath);
+    }
+
+    // Удаляем проект из данных
+    delete projects[req.params.projectId];
+    saveData(PROJECTS_FILE, projects);
+
+    res.json({ message: 'Проект успешно удален' });
+  } catch (err) {
+    console.error('Ошибка удаления проекта:', err);
+    res.status(500).json({ error: 'Ошибка удаления проекта' });
+  }
+});
+
 // Генерация Excel сметы
 app.get('/api/projects/:projectId/export/excel', authMiddleware, async (req, res) => {
   try {
