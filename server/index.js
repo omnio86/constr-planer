@@ -11,6 +11,7 @@ const ExcelJS = require('exceljs');
 const puppeteer = require('puppeteer');
 const { v4: uuidv4 } = require('uuid');
 const axios = require('axios');
+const { GoogleGenAI } = require('@google/genai');
 const config = require('../config/config.json');
 
 const app = express();
@@ -716,7 +717,7 @@ app.get('/api/projects/:projectId/visualization', authMiddleware, (req, res) => 
   });
 });
 
-// Тестирование nanobanana API
+// Тестирование nanobanana API с использованием Google GenAI
 app.post('/api/nanobanana/test', authMiddleware, uploadImage.single('image'), async (req, res) => {
   try {
     const { apiKey, prompt } = req.body;
@@ -739,32 +740,67 @@ app.post('/api/nanobanana/test', authMiddleware, uploadImage.single('image'), as
     const imageBuffer = fs.readFileSync(imagePath);
     const base64Image = imageBuffer.toString('base64');
     
-    // Заглушка для имитации вызова nanobanana API
-    // В реальном приложении здесь был бы реальный API вызов к nanobanana
-    console.log(`[Nanobanana Test] Calling API with key: ${apiKey.substring(0, 10)}...`);
+    // Определяем MIME-тип изображения
+    const ext = path.extname(req.file.originalname).toLowerCase();
+    let mimeType = 'image/png';
+    if (ext === '.jpg' || ext === '.jpeg') mimeType = 'image/jpeg';
+    if (ext === '.gif') mimeType = 'image/gif';
+    if (ext === '.webp') mimeType = 'image/webp';
+    
+    console.log(`[Nanobanana Test] Calling Google GenAI API with key: ${apiKey.substring(0, 10)}...`);
     console.log(`[Nanobanana Test] Prompt: ${prompt}`);
-    console.log(`[Nanobanana Test] Image size: ${imageBuffer.length} bytes`);
+    console.log(`[Nanobanana Test] Image size: ${imageBuffer.length} bytes, MIME: ${mimeType}`);
     
-    // Имитация обработки - возвращаем загруженное изображение как "результат"
-    // В реальном сценарии здесь был бы реальный API вызов:
-    // const response = await axios.post('https://api.nanobanana.ai/v1/generate', {
-    //   apiKey,
-    //   prompt,
-    //   image: base64Image
-    // });
+    // Инициализация Google GenAI с API ключом пользователя
+    const ai = new GoogleGenAI({ apiKey });
     
-    // Для демонстрации возвращаем загруженное изображение с наложенным текстом
-    // или просто ссылку на загруженное изображение как результат
-    await simulateNanobananaProcessing();
+    // Формирование промта согласно документации Google GenAI
+    const contents = [
+      { text: prompt },
+      {
+        inlineData: {
+          mimeType: mimeType,
+          data: base64Image,
+        },
+      },
+    ];
     
-    // Копируем изображение как "результат" с уникальным именем
-    const resultFileName = `result-${uuidv4()}-${req.file.originalname}`;
-    const resultPath = path.join(__dirname, '../public/uploads/nanobanana', resultFileName);
-    fs.copyFileSync(imagePath, resultPath);
+    // Вызов API Gemini для генерации изображения
+    const response = await ai.models.generateContent({
+      model: 'gemini-2.5-flash-image',
+      contents: contents,
+    });
     
-    // Удаляем оригинал после копирования
+    console.log(`[Nanobanana Test] Response received, processing...`);
+    
+    // Обработка ответа и извлечение сгенерированного изображения
+    let resultImagePath = null;
+    
+    if (response.candidates && response.candidates.length > 0) {
+      const candidate = response.candidates[0];
+      if (candidate.content && candidate.content.parts) {
+        for (const part of candidate.content.parts) {
+          if (part.inlineData && part.inlineData.data) {
+            // Сохраняем сгенерированное изображение
+            const resultFileName = `result-${uuidv4()}.png`;
+            resultImagePath = path.join(__dirname, '../public/uploads/nanobanana', resultFileName);
+            const imageData = Buffer.from(part.inlineData.data, 'base64');
+            fs.writeFileSync(resultImagePath, imageData);
+            console.log(`[Nanobanana Test] Generated image saved: ${resultFileName}`);
+            break;
+          }
+        }
+      }
+    }
+    
+    // Удаляем оригинал загруженного изображения
     fs.unlinkSync(imagePath);
     
+    if (!resultImagePath) {
+      return res.status(500).json({ error: 'API не вернуло изображение в ответе' });
+    }
+    
+    const resultFileName = path.basename(resultImagePath);
     const resultUrl = `/uploads/nanobanana/${resultFileName}`;
     
     res.json({
@@ -775,6 +811,7 @@ app.post('/api/nanobanana/test', authMiddleware, uploadImage.single('image'), as
     
   } catch (err) {
     console.error('[Nanobanana Test] Error:', err.message);
+    console.error('[Nanobanana Test] Stack:', err.stack);
     
     // Очистка загруженного файла в случае ошибки
     if (req.file && fs.existsSync(req.file.path)) {
@@ -784,11 +821,6 @@ app.post('/api/nanobanana/test', authMiddleware, uploadImage.single('image'), as
     res.status(500).json({ error: 'Ошибка при обработке запроса: ' + err.message });
   }
 });
-
-// Имитация задержки обработки nanobanana
-function simulateNanobananaProcessing() {
-  return new Promise(resolve => setTimeout(resolve, 2000));
-}
 
 app.listen(PORT, () => {
   console.log(`Сервер запущен на порту ${PORT}`);

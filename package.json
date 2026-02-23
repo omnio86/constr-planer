@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/omnio86/constr-planer#readme",
   "dependencies": {
+    "@google/genai": "^1.42.0",
     "axios": "^1.13.5",
     "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
