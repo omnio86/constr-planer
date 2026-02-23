@@ -99,6 +99,19 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage, limits: { fileSize: 50 * 1024 * 1024 } });
 
+// Настройка загрузки изображений для nanobanana
+const imageStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const uploadDir = path.join(__dirname, '../public/uploads/nanobanana');
+    if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
+    cb(null, uploadDir);
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${uuidv4()}-${file.originalname}`);
+  }
+});
+const uploadImage = multer({ storage: imageStorage, limits: { fileSize: 20 * 1024 * 1024 } });
+
 // ==================== API МАРШРУТЫ ====================
 
 // Регистрация
@@ -702,6 +715,80 @@ app.get('/api/projects/:projectId/visualization', authMiddleware, (req, res) => 
     totalNewWallLength: project.analysis.totalNewWallLength
   });
 });
+
+// Тестирование nanobanana API
+app.post('/api/nanobanana/test', authMiddleware, uploadImage.single('image'), async (req, res) => {
+  try {
+    const { apiKey, prompt } = req.body;
+    
+    if (!req.file) {
+      return res.status(400).json({ error: 'Изображение не загружено' });
+    }
+    
+    if (!apiKey) {
+      fs.unlinkSync(req.file.path);
+      return res.status(400).json({ error: 'API ключ обязателен' });
+    }
+    
+    if (!prompt) {
+      fs.unlinkSync(req.file.path);
+      return res.status(400).json({ error: 'Промт обязателен' });
+    }
+    
+    const imagePath = req.file.path;
+    const imageBuffer = fs.readFileSync(imagePath);
+    const base64Image = imageBuffer.toString('base64');
+    
+    // Заглушка для имитации вызова nanobanana API
+    // В реальном приложении здесь был бы реальный API вызов к nanobanana
+    console.log(`[Nanobanana Test] Calling API with key: ${apiKey.substring(0, 10)}...`);
+    console.log(`[Nanobanana Test] Prompt: ${prompt}`);
+    console.log(`[Nanobanana Test] Image size: ${imageBuffer.length} bytes`);
+    
+    // Имитация обработки - возвращаем загруженное изображение как "результат"
+    // В реальном сценарии здесь был бы реальный API вызов:
+    // const response = await axios.post('https://api.nanobanana.ai/v1/generate', {
+    //   apiKey,
+    //   prompt,
+    //   image: base64Image
+    // });
+    
+    // Для демонстрации возвращаем загруженное изображение с наложенным текстом
+    // или просто ссылку на загруженное изображение как результат
+    await simulateNanobananaProcessing();
+    
+    // Копируем изображение как "результат" с уникальным именем
+    const resultFileName = `result-${uuidv4()}-${req.file.originalname}`;
+    const resultPath = path.join(__dirname, '../public/uploads/nanobanana', resultFileName);
+    fs.copyFileSync(imagePath, resultPath);
+    
+    // Удаляем оригинал после копирования
+    fs.unlinkSync(imagePath);
+    
+    const resultUrl = `/uploads/nanobanana/${resultFileName}`;
+    
+    res.json({
+      success: true,
+      resultUrl,
+      message: 'Генерация завершена успешно'
+    });
+    
+  } catch (err) {
+    console.error('[Nanobanana Test] Error:', err.message);
+    
+    // Очистка загруженного файла в случае ошибки
+    if (req.file && fs.existsSync(req.file.path)) {
+      fs.unlinkSync(req.file.path);
+    }
+    
+    res.status(500).json({ error: 'Ошибка при обработке запроса: ' + err.message });
+  }
+});
+
+// Имитация задержки обработки nanobanana
+function simulateNanobananaProcessing() {
+  return new Promise(resolve => setTimeout(resolve, 2000));
+}
 
 app.listen(PORT, () => {
   console.log(`Сервер запущен на порту ${PORT}`);

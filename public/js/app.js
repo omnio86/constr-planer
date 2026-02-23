@@ -211,147 +211,69 @@ function switchMainTab(tabName) {
     }
 }
 
-// ===== БАНАНА ТЕСТ =====
-const bananaQuestions = [
-    {
-        text: 'Как вы реагируете на понедельник утром?',
-        options: [
-            { label: 'Встаю с улыбкой — новый день, новые возможности!', score: 0 },
-            { label: 'Тяжело, но справляюсь с третьей чашкой кофе', score: 1 },
-            { label: 'Это просто катастрофа, я остаюсь в кровати', score: 2 },
-            { label: 'Я вообще не замечаю разницы между днями', score: 3 }
-        ]
-    },
-    {
-        text: 'Что вы выберете на завтрак?',
-        options: [
-            { label: 'Овсянку с фруктами — здоровье прежде всего', score: 0 },
-            { label: 'Яичницу и тост — быстро и сытно', score: 1 },
-            { label: 'Что найду в холодильнике', score: 2 },
-            { label: 'Банан, конечно!', score: 3 }
-        ]
-    },
-    {
-        text: 'Если вы видите обезьяну в зоопарке, вы:',
-        options: [
-            { label: 'Фотографируете и идёте дальше', score: 0 },
-            { label: 'Долго наблюдаете — они такие забавные', score: 1 },
-            { label: 'Пытаетесь с ней поговорить', score: 2 },
-            { label: 'Завидуете — она ест бананы без укора совести', score: 3 }
-        ]
-    },
-    {
-        text: 'Как вы справляетесь со стрессом?',
-        options: [
-            { label: 'Медитация и спокойный чай', score: 0 },
-            { label: 'Прогулка на свежем воздухе', score: 1 },
-            { label: 'Ем что-нибудь вкусное', score: 2 },
-            { label: 'Ем бананы — в них есть серотонин!', score: 3 }
-        ]
-    },
-    {
-        text: 'Какой цвет вам больше нравится?',
-        options: [
-            { label: 'Синий — спокойный и надёжный', score: 0 },
-            { label: 'Зелёный — природа и жизнь', score: 1 },
-            { label: 'Оранжевый — энергия и тепло', score: 2 },
-            { label: 'Жёлтый — как банан!', score: 3 }
-        ]
-    }
-];
-
-const bananaResults = [
-    {
-        minScore: 0,
-        maxScore: 4,
-        icon: '🥦',
-        title: 'Вы — не банан',
-        desc: 'Вы серьёзный и рациональный человек. Банана в вас совсем немного. Но это не страшно — может, стоит попробовать?'
-    },
-    {
-        minScore: 5,
-        maxScore: 8,
-        icon: '🍋',
-        title: 'Вы слегка банана',
-        desc: 'В вас есть искорка бананового духа! Вы умеете расслабиться и пошутить, хотя серьёзность всё же берёт верх.'
-    },
-    {
-        minScore: 9,
-        maxScore: 11,
-        icon: '🍌',
-        title: 'Вы настоящий банан!',
-        desc: 'Поздравляем! В вас живёт настоящий банановый дух: жизнерадостность, непосредственность и любовь к жёлтому цвету.'
-    },
-    {
-        minScore: 12,
-        maxScore: 15,
-        icon: '🍌🍌🍌',
-        title: 'Вы — ультра-банан!!!',
-        desc: 'Вы не просто банан — вы целая гроздь! Вы живёте в мире бананов, мыслите бананами и, скорее всего, уже потянулись за бананом прямо сейчас.'
-    }
-];
-
-const bananaState = {
-    currentQuestion: 0,
-    totalScore: 0
-};
-
-function bananaStartQuiz() {
-    bananaState.currentQuestion = 0;
-    bananaState.totalScore = 0;
-    document.getElementById('banana-question-block').classList.remove('hidden');
-    document.getElementById('banana-result-block').classList.add('hidden');
-    document.getElementById('banana-q-total').textContent = bananaQuestions.length;
-    bananaShowQuestion();
+// ===== NANOBANANA API TEST =====
+function resetNanobananaForm() {
+    document.getElementById('nanobanana-test-form').reset();
+    document.getElementById('nanobanana-test-form').classList.remove('hidden');
+    document.getElementById('nanobanana-loading').classList.add('hidden');
+    document.getElementById('nanobanana-result').classList.add('hidden');
+    document.getElementById('nanobanana-error').classList.add('hidden');
+    document.getElementById('nanobanana-error').textContent = '';
 }
 
-function bananaShowQuestion() {
-    const q = bananaQuestions[bananaState.currentQuestion];
-    const progress = (bananaState.currentQuestion / bananaQuestions.length) * 100;
-
-    document.getElementById('banana-progress-bar').style.width = `${progress}%`;
-    document.getElementById('banana-q-num').textContent = bananaState.currentQuestion + 1;
-    document.getElementById('banana-question-text').textContent = q.text;
-
-    const optionsEl = document.getElementById('banana-options');
-    optionsEl.innerHTML = '';
-    q.options.forEach(opt => {
-        const btn = document.createElement('button');
-        btn.className = 'banana-option-btn';
-        btn.textContent = opt.label;
-        btn.addEventListener('click', () => bananaSelectOption(opt.score));
-        optionsEl.appendChild(btn);
-    });
-}
-
-function bananaSelectOption(score) {
-    bananaState.totalScore += score;
-    bananaState.currentQuestion++;
-
-    if (bananaState.currentQuestion < bananaQuestions.length) {
-        bananaShowQuestion();
-    } else {
-        bananaShowResult();
+async function submitNanobananaTest(e) {
+    e.preventDefault();
+    
+    const apiKey = document.getElementById('nanobanana-key').value.trim();
+    const imageFile = document.getElementById('nanobanana-image').files[0];
+    const prompt = document.getElementById('nanobanana-prompt').value.trim();
+    
+    if (!apiKey || !imageFile || !prompt) {
+        showNanobananaError('Пожалуйста, заполните все поля');
+        return;
+    }
+    
+    // Show loading state
+    document.getElementById('nanobanana-test-form').classList.add('hidden');
+    document.getElementById('nanobanana-loading').classList.remove('hidden');
+    document.getElementById('nanobanana-error').classList.add('hidden');
+    
+    const formData = new FormData();
+    formData.append('apiKey', apiKey);
+    formData.append('image', imageFile);
+    formData.append('prompt', prompt);
+    
+    try {
+        const response = await fetch(`${API_URL}/api/nanobanana/test`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${state.token}`
+            },
+            body: formData
+        });
+        
+        const data = await response.json();
+        
+        if (!response.ok) {
+            throw new Error(data.error || 'Ошибка при генерации изображения');
+        }
+        
+        // Show result
+        document.getElementById('nanobanana-loading').classList.add('hidden');
+        document.getElementById('nanobanana-result').classList.remove('hidden');
+        document.getElementById('nanobanana-result-img').src = data.resultUrl;
+        
+    } catch (error) {
+        document.getElementById('nanobanana-loading').classList.add('hidden');
+        document.getElementById('nanobanana-test-form').classList.remove('hidden');
+        showNanobananaError(error.message);
     }
 }
 
-function bananaShowResult() {
-    document.getElementById('banana-progress-bar').style.width = '100%';
-    document.getElementById('banana-question-block').classList.add('hidden');
-    document.getElementById('banana-result-block').classList.remove('hidden');
-
-    const result = bananaResults.find(
-        r => bananaState.totalScore >= r.minScore && bananaState.totalScore <= r.maxScore
-    ) || bananaResults[bananaResults.length - 1];
-
-    document.getElementById('banana-result-icon').textContent = result.icon;
-    document.getElementById('banana-result-title').textContent = result.title;
-    document.getElementById('banana-result-desc').textContent = result.desc;
-
-    const maxScore = bananaQuestions.length * 3;
-    const pct = Math.round((bananaState.totalScore / maxScore) * 100);
-    document.getElementById('banana-score-bar').style.width = `${pct}%`;
-    document.getElementById('banana-score-label').textContent = `Ваш результат: ${bananaState.totalScore} из ${maxScore} (${pct}%)`;
+function showNanobananaError(message) {
+    const errorEl = document.getElementById('nanobanana-error');
+    errorEl.textContent = message;
+    errorEl.classList.remove('hidden');
 }
 
 // ===== ПРОЕКТЫ =====
@@ -1027,9 +949,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Банана Тест
-    bananaStartQuiz();
-    document.getElementById('banana-restart-btn').addEventListener('click', bananaStartQuiz);
+    // Nanobanana Test
+    document.getElementById('nanobanana-test-form').addEventListener('submit', submitNanobananaTest);
+    document.getElementById('nanobanana-new-test-btn').addEventListener('click', resetNanobananaForm);
     
     // Новый проект
     elements.newProjectBtn.addEventListener('click', showNewProjectForm);

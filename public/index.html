@@ -240,33 +240,51 @@
                             <span class="banana-icon">🍌</span>
                             <h2>Банана Тест</h2>
                         </div>
-                        <p class="card-description">Ответьте на вопросы и узнайте, насколько вы «банана»!</p>
+                        <p class="card-description">Тестирование nanobanana API для генерации изображений</p>
                     </div>
 
-                    <div id="banana-quiz" class="card">
-                        <div id="banana-question-block">
-                            <div class="banana-progress-bar-wrap">
-                                <div id="banana-progress-bar" class="banana-progress-bar" style="width: 0%"></div>
+                    <div id="banana-form" class="card">
+                        <form id="nanobanana-test-form">
+                            <div class="form-group">
+                                <label for="nanobanana-key">API Ключ</label>
+                                <input type="text" id="nanobanana-key" placeholder="Введите ваш nanobanana API ключ" required>
                             </div>
-                            <div class="banana-question-counter">
-                                Вопрос <span id="banana-q-num">1</span> из <span id="banana-q-total">5</span>
+                            <div class="form-group">
+                                <label for="nanobanana-image">Изображение</label>
+                                <input type="file" id="nanobanana-image" accept="image/*" class="file-input" required>
+                                <div class="file-info">
+                                    <small>Загрузите изображение для обработки</small>
+                                </div>
                             </div>
-                            <div id="banana-question-text" class="banana-question-text"></div>
-                            <div id="banana-options" class="banana-options"></div>
+                            <div class="form-group">
+                                <label for="nanobanana-prompt">Промт</label>
+                                <textarea id="nanobanana-prompt" rows="4" placeholder="Введите промт для генерации изображения..." required></textarea>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" id="nanobanana-submit-btn" class="btn btn-primary">
+                                    🚀 Запустить генерацию
+                                </button>
+                            </div>
+                        </form>
+
+                        <div id="nanobanana-loading" class="hidden" style="text-align: center; padding: 40px;">
+                            <div class="progress-bar" style="width: 60%; margin: 0 auto; animation: none;">
+                                <div style="height: 100%; width: 100%; background: var(--primary-color); animation: pulse 1.5s ease-in-out infinite;"></div>
+                            </div>
+                            <p style="margin-top: 20px; color: var(--text-light);">Генерация изображения... Это может занять несколько секунд</p>
                         </div>
 
-                        <div id="banana-result-block" class="banana-result hidden">
-                            <div class="banana-result-icon" id="banana-result-icon"></div>
-                            <h3 id="banana-result-title"></h3>
-                            <p id="banana-result-desc"></p>
-                            <div class="banana-score-bar-wrap">
-                                <div id="banana-score-bar" class="banana-score-bar"></div>
+                        <div id="nanobanana-result" class="hidden" style="margin-top: 30px;">
+                            <h3 style="margin-bottom: 20px; text-align: center;">Результат генерации</h3>
+                            <div class="nanobanana-result-image">
+                                <img id="nanobanana-result-img" src="" alt="Результат генерации" style="max-width: 100%; border-radius: 12px; box-shadow: var(--shadow-lg);">
                             </div>
-                            <div id="banana-score-label" class="banana-score-label"></div>
-                            <button id="banana-restart-btn" class="btn btn-primary" style="margin-top: 25px;">
-                                🍌 Пройти заново
-                            </button>
+                            <div class="form-actions" style="margin-top: 25px; justify-content: center;">
+                                <button id="nanobanana-new-test-btn" class="btn btn-primary">🔄 Новый тест</button>
+                            </div>
                         </div>
+
+                        <div id="nanobanana-error" class="hidden message error" style="margin-top: 20px;"></div>
                     </div>
                 </div>
             </div>
