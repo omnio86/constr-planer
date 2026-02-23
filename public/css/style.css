@@ -849,6 +849,140 @@ body {
     }
 }
 
+/* ===== БАНАНА ТЕСТ ===== */
+.banana-section {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.banana-header-card {
+    text-align: center;
+    padding: 30px;
+}
+
+.banana-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.banana-icon {
+    font-size: 2.5rem;
+}
+
+.banana-title-row h2 {
+    font-size: 2rem;
+    color: var(--text-color);
+}
+
+.banana-progress-bar-wrap {
+    background: var(--border-color);
+    border-radius: 10px;
+    height: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.banana-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #f9ca24, #f0932b);
+    border-radius: 10px;
+    transition: width 0.4s ease;
+}
+
+.banana-question-counter {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.banana-question-text {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.banana-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.banana-option-btn {
+    padding: 16px 20px;
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    font-size: 1rem;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.25s;
+    font-family: inherit;
+}
+
+.banana-option-btn:hover {
+    border-color: #f9ca24;
+    background: #fffde7;
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(249, 202, 36, 0.2);
+}
+
+.banana-result {
+    text-align: center;
+    padding: 10px 0;
+}
+
+.banana-result-icon {
+    font-size: 4rem;
+    margin-bottom: 15px;
+    animation: bananaAppear 0.5s ease-out;
+}
+
+@keyframes bananaAppear {
+    from { transform: scale(0) rotate(-20deg); opacity: 0; }
+    to { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.banana-result h3 {
+    font-size: 1.6rem;
+    color: var(--text-color);
+    margin-bottom: 12px;
+}
+
+.banana-result p {
+    color: var(--text-light);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+.banana-score-bar-wrap {
+    background: var(--border-color);
+    border-radius: 10px;
+    height: 12px;
+    margin: 15px 0 8px;
+    overflow: hidden;
+}
+
+.banana-score-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #6ab04c, #f9ca24, #f0932b);
+    border-radius: 10px;
+    transition: width 0.6s ease;
+}
+
+.banana-score-label {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    font-weight: 500;
+}
+
 /* ===== АНИМАЦИИ ===== */
 @keyframes fadeIn {
     from {

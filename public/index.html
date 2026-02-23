@@ -74,6 +74,7 @@
             <div class="header-center">
                 <nav class="nav-tabs">
                     <button class="nav-tab active" data-tab="dashboard">Проекты</button>
+                    <button class="nav-tab" data-tab="banana">Банана Тест</button>
                     <button class="nav-tab" data-tab="profile">Личный кабинет</button>
                 </nav>
             </div>
@@ -224,6 +225,47 @@
 
                         <div class="form-actions">
                             <button id="back-to-projects-btn" class="btn btn-secondary">Назад</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Банана Тест -->
+        <div id="banana-tab" class="tab-content">
+            <div class="container">
+                <div class="banana-section">
+                    <div class="card banana-header-card">
+                        <div class="banana-title-row">
+                            <span class="banana-icon">🍌</span>
+                            <h2>Банана Тест</h2>
+                        </div>
+                        <p class="card-description">Ответьте на вопросы и узнайте, насколько вы «банана»!</p>
+                    </div>
+
+                    <div id="banana-quiz" class="card">
+                        <div id="banana-question-block">
+                            <div class="banana-progress-bar-wrap">
+                                <div id="banana-progress-bar" class="banana-progress-bar" style="width: 0%"></div>
+                            </div>
+                            <div class="banana-question-counter">
+                                Вопрос <span id="banana-q-num">1</span> из <span id="banana-q-total">5</span>
+                            </div>
+                            <div id="banana-question-text" class="banana-question-text"></div>
+                            <div id="banana-options" class="banana-options"></div>
+                        </div>
+
+                        <div id="banana-result-block" class="banana-result hidden">
+                            <div class="banana-result-icon" id="banana-result-icon"></div>
+                            <h3 id="banana-result-title"></h3>
+                            <p id="banana-result-desc"></p>
+                            <div class="banana-score-bar-wrap">
+                                <div id="banana-score-bar" class="banana-score-bar"></div>
+                            </div>
+                            <div id="banana-score-label" class="banana-score-label"></div>
+                            <button id="banana-restart-btn" class="btn btn-primary" style="margin-top: 25px;">
+                                🍌 Пройти заново
+                            </button>
                         </div>
                     </div>
                 </div>
