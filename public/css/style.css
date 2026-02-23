@@ -1065,3 +1065,21 @@ body {
     color: var(--text-light);
     font-size: 0.9rem;
 }
+
+.generated-image-section {
+    margin-bottom: 30px;
+}
+
+.generated-image-section h4 {
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+
+.generated-image {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    display: block;
+}

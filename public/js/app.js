@@ -608,33 +608,60 @@ async function openProjectForProcessing(project) {
     }
 }
 
+async function renderPageToBlob(pageNumber) {
+    const pdfUrl = state.currentProject.pages[0]?.image;
+    const loadingTask = pdfjsLib.getDocument(pdfUrl);
+    const pdf = await loadingTask.promise;
+    const page = await pdf.getPage(pageNumber);
+    const scale = 2;
+    const viewport = page.getViewport({ scale });
+    const canvas = document.createElement('canvas');
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+    const context = canvas.getContext('2d');
+    await page.render({ canvasContext: context, viewport }).promise;
+    return new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
+}
+
 async function startProcessing() {
     if (!state.selectedPage) return;
-    
+
     elements.startProcessingBtn.disabled = true;
     elements.startProcessingBtn.textContent = 'Обработка...';
-    
+
     try {
-        const data = await api(`/projects/${state.currentProject.id}/process`, {
+        const pageBlob = await renderPageToBlob(state.selectedPage);
+
+        const formData = new FormData();
+        formData.append('pageImage', pageBlob, 'page.png');
+        formData.append('pageNumber', state.selectedPage);
+        formData.append('installPiles', elements.installPiles.checked);
+        formData.append('pileDistance', elements.pileDistance.value);
+
+        const response = await fetch(`${API_URL}/api/projects/${state.currentProject.id}/process`, {
             method: 'POST',
-            body: {
-                pageNumber: state.selectedPage,
-                installPiles: elements.installPiles.checked,
-                pileDistance: elements.pileDistance.value
-            }
+            headers: {
+                'Authorization': `Bearer ${state.token}`
+            },
+            body: formData
         });
-        
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || 'Ошибка обработки');
+        }
+
         state.tokens = data.tokensLeft;
         elements.userTokens.textContent = state.tokens;
         elements.profileTokens.textContent = state.tokens;
-        
-        // Обновляем проект
+
         const projects = await api('/projects');
         const updatedProject = projects.find(p => p.id === state.currentProject.id);
         if (updatedProject) {
             showResults(updatedProject);
         }
-        
+
     } catch (error) {
         alert(error.message);
         elements.startProcessingBtn.disabled = false;
@@ -645,26 +672,36 @@ async function startProcessing() {
 // ===== РЕЗУЛЬТАТЫ =====
 function showResults(project) {
     state.currentProject = project;
-    
+
     elements.projectProcessing.classList.add('hidden');
     elements.projectsList.parentElement.classList.add('hidden');
     elements.newProjectForm.classList.add('hidden');
     elements.projectResults.classList.remove('hidden');
-    
-    const analysis = project.analysis;
-    
-    // Статистика
-    elements.statsWallLength.textContent = `${analysis.totalNewWallLength} м`;
-    
-    if (project.pileOptions?.installPiles) {
-        elements.statsPilesCard.style.display = 'block';
-        elements.statsPilesCount.textContent = `${analysis.pilesNeeded} шт`;
+
+    const generatedImageContainer = document.getElementById('generated-image-container');
+    const generatedImg = document.getElementById('generated-image');
+
+    if (project.generatedImageUrl) {
+        generatedImg.src = project.generatedImageUrl;
+        generatedImageContainer.classList.remove('hidden');
     } else {
-        elements.statsPilesCard.style.display = 'none';
+        generatedImageContainer.classList.add('hidden');
     }
-    
-    // 3D визуализация
-    init3DVisualization(analysis.objects3D);
+
+    const statsSection = document.getElementById('results-stats-section');
+    if (project.analysis) {
+        elements.statsWallLength.textContent = `${project.analysis.totalNewWallLength} м`;
+        if (project.pileOptions?.installPiles) {
+            elements.statsPilesCard.style.display = 'block';
+            elements.statsPilesCount.textContent = `${project.analysis.pilesNeeded} шт`;
+        } else {
+            elements.statsPilesCard.style.display = 'none';
+        }
+        if (statsSection) statsSection.classList.remove('hidden');
+        init3DVisualization(project.analysis.objects3D);
+    } else {
+        if (statsSection) statsSection.classList.add('hidden');
+    }
 }
 
 function init3DVisualization(objects3D) {

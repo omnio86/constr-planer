@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -112,6 +113,9 @@ const imageStorage = multer.diskStorage({
   }
 });
 const uploadImage = multer({ storage: imageStorage, limits: { fileSize: 20 * 1024 * 1024 } });
+
+const pageImageStorage = multer.memoryStorage();
+const uploadPageImage = multer({ storage: pageImageStorage, limits: { fileSize: 20 * 1024 * 1024 } });
 
 // ==================== API МАРШРУТЫ ====================
 
@@ -305,59 +309,100 @@ app.post('/api/projects/upload', authMiddleware, upload.single('pdf'), async (re
   }
 });
 
+const BLUEPRINT_PROMPT = 'На основе чертежа, создай 3D-изображение дизайн проекта офисного помещения с только новыми стенами. Новые стены на исходном чертеже отмечены синим цветом, не показывай на картинке сантехнику, какую-то мебель, не учитывай окна (на уже существующих стенах).';
+
 // Обработка выбранной страницы
-app.post('/api/projects/:projectId/process', authMiddleware, async (req, res) => {
+app.post('/api/projects/:projectId/process', authMiddleware, uploadPageImage.single('pageImage'), async (req, res) => {
   try {
     const { pageNumber, installPiles, pileDistance } = req.body;
     const projects = loadData(PROJECTS_FILE);
     const project = projects[req.params.projectId];
-    
+
     if (!project) return res.status(404).json({ error: 'Проект не найден' });
     if (project.userId !== req.user.userId && !req.user.isAdmin) {
       return res.status(403).json({ error: 'Нет доступа' });
     }
-    
+
     const users = loadData(USERS_FILE);
     const user = users[req.user.username];
-    
+
     if (user.tokens < 2) {
       return res.status(403).json({ error: 'Недостаточно токенов (требуется 2)' });
     }
-    
-    // Получаем путь к изображению страницы
-    const pageData = project.pages.find(p => p.page === parseInt(pageNumber));
-    if (!pageData) return res.status(404).json({ error: 'Страница не найдена' });
-    
-    // Отправляем на обработку в Nobanana API (заглушка)
-    // В реальном приложении здесь был бы реальный API вызов
-    const analysisResult = await analyzeBlueprint(
-      path.join(__dirname, '../public', pageData.image),
-      { installPiles, pileDistance }
-    );
-    
-    // Обновляем проект
+
+    const apiKey = process.env.NANOBANANA_API_KEY;
+    if (!apiKey || apiKey === 'your_api_key_here') {
+      return res.status(500).json({ error: 'API ключ не настроен. Добавьте NANOBANANA_API_KEY в .env файл' });
+    }
+
+    if (!req.file) {
+      return res.status(400).json({ error: 'Изображение страницы не передано' });
+    }
+
+    console.log(`[Process] Calling Google GenAI for project: ${project.id}, page: ${pageNumber}`);
+
+    const ai = new GoogleGenAI({ apiKey });
+    const base64Image = req.file.buffer.toString('base64');
+
+    const contents = [
+      { text: BLUEPRINT_PROMPT },
+      {
+        inlineData: {
+          mimeType: 'image/png',
+          data: base64Image,
+        },
+      },
+    ];
+
+    const response = await ai.models.generateContent({
+      model: 'gemini-2.5-flash-image',
+      contents,
+    });
+
+    let generatedImageUrl = null;
+
+    if (response.candidates && response.candidates.length > 0) {
+      const candidate = response.candidates[0];
+      if (candidate.content && candidate.content.parts) {
+        for (const part of candidate.content.parts) {
+          if (part.inlineData && part.inlineData.data) {
+            const resultDir = path.join(__dirname, '../public/uploads/nanobanana');
+            if (!fs.existsSync(resultDir)) fs.mkdirSync(resultDir, { recursive: true });
+            const resultFileName = `result-${uuidv4()}.png`;
+            const resultPath = path.join(resultDir, resultFileName);
+            fs.writeFileSync(resultPath, Buffer.from(part.inlineData.data, 'base64'));
+            generatedImageUrl = `/uploads/nanobanana/${resultFileName}`;
+            console.log(`[Process] Generated image saved: ${resultFileName}`);
+            break;
+          }
+        }
+      }
+    }
+
+    if (!generatedImageUrl) {
+      return res.status(500).json({ error: 'API не вернуло изображение в ответе' });
+    }
+
     project.status = 'processed';
     project.selectedPage = parseInt(pageNumber);
-    project.analysis = analysisResult;
-    project.pileOptions = { installPiles, pileDistance: parseFloat(pileDistance) || 2 };
+    project.generatedImageUrl = generatedImageUrl;
+    project.pileOptions = { installPiles: installPiles === 'true' || installPiles === true, pileDistance: parseFloat(pileDistance) || 2 };
     saveData(PROJECTS_FILE, projects);
-    
-    // Списание токенов
+
     user.tokens -= 2;
     saveData(USERS_FILE, users);
-    
-    // Записываем операцию
+
     recordOperation(user.id, 'processing', -2, `Обработка проекта "${project.name}"`);
-    
+
     res.json({
       projectId: project.id,
       status: 'processed',
-      analysis: analysisResult,
+      generatedImageUrl,
       tokensLeft: user.tokens
     });
   } catch (err) {
     console.error('Ошибка обработки:', err);
-    res.status(500).json({ error: 'Ошибка обработки чертежа' });
+    res.status(500).json({ error: 'Ошибка обработки чертежа: ' + err.message });
   }
 });
 
