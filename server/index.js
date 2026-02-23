@@ -5,7 +5,7 @@ const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const multer = require('multer');
-const pdfParse = require('pdf-parse');
+const { PDFParse } = require('pdf-parse');
 const { fromPath } = require('pdf2pic');
 const ExcelJS = require('exceljs');
 const puppeteer = require('puppeteer');
@@ -233,6 +233,11 @@ app.post('/api/projects/upload', authMiddleware, upload.single('pdf'), async (re
     const users = loadData(USERS_FILE);
     const user = users[req.user.username];
     
+    if (!user) {
+      fs.unlinkSync(req.file.path);
+      return res.status(404).json({ error: 'Пользователь не найден' });
+    }
+    
     if (user.tokens < 1) {
       fs.unlinkSync(req.file.path);
       return res.status(403).json({ error: 'Недостаточно токенов' });
@@ -240,11 +245,12 @@ app.post('/api/projects/upload', authMiddleware, upload.single('pdf'), async (re
     
     // Парсинг PDF
     const pdfBuffer = fs.readFileSync(req.file.path);
-    const pdfData = await pdfParse(pdfBuffer);
+    const parser = new PDFParse({ data: pdfBuffer });
+    const pdfData = await parser.getInfo();
     
     // Создаем список страниц (превью будут генерироваться на клиенте)
     const pageImages = [];
-    for (let i = 1; i <= pdfData.numpages; i++) {
+    for (let i = 1; i <= pdfData.total; i++) {
       pageImages.push({
         page: i,
         image: `/uploads/${path.basename(req.file.path)}`,
@@ -260,7 +266,7 @@ app.post('/api/projects/upload', authMiddleware, upload.single('pdf'), async (re
       name: projectName,
       userId: user.id,
       pdfPath: req.file.path,
-      pageCount: pdfData.numpages,
+      pageCount: pdfData.total,
       pages: pageImages,
       status: 'uploaded',
       createdAt: new Date().toISOString()
@@ -277,13 +283,25 @@ app.post('/api/projects/upload', authMiddleware, upload.single('pdf'), async (re
     res.json({
       projectId,
       name: projectName,
-      pageCount: pdfData.numpages,
+      pageCount: pdfData.total,
       pages: pageImages,
       tokensLeft: user.tokens
     });
   } catch (err) {
-    console.error('Ошибка загрузки:', err);
-    res.status(500).json({ error: 'Ошибка обработки PDF' });
+    console.error('Ошибка загрузки PDF:', err);
+    console.error('Stack trace:', err.stack);
+    console.error('Error message:', err.message);
+    
+    // Удаляем загруженный файл при ошибке
+    if (req.file && req.file.path && fs.existsSync(req.file.path)) {
+      try {
+        fs.unlinkSync(req.file.path);
+      } catch (unlinkErr) {
+        console.error('Ошибка при удалении файла:', unlinkErr);
+      }
+    }
+    
+    res.status(500).json({ error: 'Ошибка обработки PDF: ' + err.message });
   }
 });
 
