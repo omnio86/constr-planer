@@ -23,6 +23,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 // Хранилище данных
 const USERS_FILE = path.join(__dirname, 'users.json');
 const PROJECTS_FILE = path.join(__dirname, 'projects.json');
+const OPERATIONS_FILE = path.join(__dirname, 'operations.json');
 
 // Загрузка данных
 function loadData(file) {
@@ -32,6 +33,29 @@ function loadData(file) {
 
 function saveData(file, data) {
   fs.writeFileSync(file, JSON.stringify(data, null, 2));
+}
+
+// Запись операции в историю
+function recordOperation(userId, type, tokensChange, description = '') {
+  const operations = loadData(OPERATIONS_FILE);
+  if (!operations[userId]) {
+    operations[userId] = [];
+  }
+  
+  operations[userId].unshift({
+    id: uuidv4(),
+    type,
+    tokensChange,
+    description,
+    createdAt: new Date().toISOString()
+  });
+  
+  // Храним максимум 100 операций
+  if (operations[userId].length > 100) {
+    operations[userId] = operations[userId].slice(0, 100);
+  }
+  
+  saveData(OPERATIONS_FILE, operations);
 }
 
 // Инициализация superadmin
@@ -100,6 +124,9 @@ app.post('/api/auth/register', async (req, res) => {
   };
   saveData(USERS_FILE, users);
   
+  // Записываем операцию регистрации
+  recordOperation(users[username].id, 'registration', config.defaultTokens, 'Бонус за регистрацию');
+  
   res.json({ message: 'Пользователь создан' });
 });
 
@@ -152,6 +179,18 @@ app.get('/api/user', authMiddleware, (req, res) => {
   });
 });
 
+// Получение истории операций
+app.get('/api/user/operations', authMiddleware, (req, res) => {
+  const users = loadData(USERS_FILE);
+  const user = users[req.user.username];
+  if (!user) return res.status(404).json({ error: 'Пользователь не найден' });
+  
+  const operations = loadData(OPERATIONS_FILE);
+  const userOperations = operations[user.id] || [];
+  
+  res.json(userOperations);
+});
+
 // Покупка токенов
 app.post('/api/user/buy-tokens', authMiddleware, (req, res) => {
   const { amount } = req.body;
@@ -160,9 +199,13 @@ app.post('/api/user/buy-tokens', authMiddleware, (req, res) => {
   
   if (!user) return res.status(404).json({ error: 'Пользователь не найден' });
   
+  const tokenAmount = parseInt(amount) || 0;
   // В реальном приложении здесь была бы интеграция с платежной системой
-  user.tokens += parseInt(amount) || 0;
+  user.tokens += tokenAmount;
   saveData(USERS_FILE, users);
+  
+  // Записываем операцию покупки
+  recordOperation(user.id, 'purchase', tokenAmount, `Покупка ${tokenAmount} токенов`);
   
   res.json({ message: 'Токены добавлены', tokens: user.tokens });
 });
@@ -213,6 +256,9 @@ app.post('/api/projects/upload', authMiddleware, upload.single('pdf'), async (re
     // Списание токена
     user.tokens -= 1;
     saveData(USERS_FILE, users);
+    
+    // Записываем операцию
+    recordOperation(user.id, 'upload', -1, `Загрузка проекта "${projectName}"`);
     
     res.json({
       projectId,
@@ -267,6 +313,9 @@ app.post('/api/projects/:projectId/process', authMiddleware, async (req, res) =>
     // Списание токенов
     user.tokens -= 2;
     saveData(USERS_FILE, users);
+    
+    // Записываем операцию
+    recordOperation(user.id, 'processing', -2, `Обработка проекта "${project.name}"`);
     
     res.json({
       projectId: project.id,
