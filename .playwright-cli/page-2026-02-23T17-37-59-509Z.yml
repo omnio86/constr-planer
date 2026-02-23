@@ -1,0 +1,27 @@
+- generic [ref=e21]:
+  - banner [ref=e22]:
+    - heading "Constr Planer" [level=1] [ref=e24]
+    - navigation [ref=e26]:
+      - button "Проекты" [ref=e27] [cursor=pointer]
+      - button "Банана Тест" [ref=e28] [cursor=pointer]
+      - button "Личный кабинет" [ref=e29] [cursor=pointer]
+    - generic [ref=e30]:
+      - generic [ref=e31]:
+        - text: "Токены:"
+        - strong [ref=e32]: "999995"
+      - generic [ref=e33]: superadmin
+      - button "Выйти" [ref=e34] [cursor=pointer]
+  - generic [ref=e64]:
+    - generic [ref=e65]:
+      - generic [ref=e66]:
+        - generic [ref=e67]: 🍌
+        - heading "Банана Тест" [level=2] [ref=e68]
+      - paragraph [ref=e69]: Ответьте на вопросы и узнайте, насколько вы «банана»!
+    - generic [ref=e71]:
+      - generic [ref=e73]: Вопрос 2 из 5
+      - generic [ref=e74]: Что вы выберете на завтрак?
+      - generic [ref=e75]:
+        - button "Овсянку с фруктами — здоровье прежде всего" [ref=e81] [cursor=pointer]
+        - button "Яичницу и тост — быстро и сытно" [ref=e82] [cursor=pointer]
+        - button "Что найду в холодильнике" [ref=e83] [cursor=pointer]
+        - button "Банан, конечно!" [ref=e84] [cursor=pointer]

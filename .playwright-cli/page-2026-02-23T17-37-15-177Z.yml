@@ -1,0 +1,18 @@
+- generic [ref=e4]:
+  - generic [ref=e5]:
+    - heading "Constr Planer" [level=1] [ref=e6]
+    - paragraph [ref=e7]: Планировщик строительных проектов с AI-анализом чертежей
+  - generic [ref=e8]:
+    - button "Вход" [ref=e9] [cursor=pointer]
+    - button "Регистрация" [ref=e10] [cursor=pointer]
+  - generic [ref=e11]:
+    - generic [ref=e12]:
+      - generic [ref=e13]: Логин
+      - textbox "Логин" [ref=e14]:
+        - /placeholder: Введите логин
+    - generic [ref=e15]:
+      - generic [ref=e16]: Пароль
+      - textbox "Пароль" [ref=e17]:
+        - /placeholder: Введите пароль
+    - button "Войти" [ref=e18] [cursor=pointer]
+    - generic [ref=e19]: "Демо: логин \"superadmin\", пароль \"superadmin\""
