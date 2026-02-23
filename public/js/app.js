@@ -153,6 +153,10 @@ function logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
     
+    // Очистка полей формы входа
+    document.getElementById('login-username').value = '';
+    document.getElementById('login-password').value = '';
+    
     showAuthPage();
 }
 
