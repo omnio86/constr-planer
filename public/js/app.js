@@ -204,6 +204,7 @@ function switchMainTab(tabName) {
         elements.dashboardTab.classList.add('active');
     } else {
         elements.profileTab.classList.add('active');
+        loadOperations();
     }
 }
 
@@ -765,6 +766,52 @@ function backToProjects() {
 }
 
 // ===== ЛИЧНЫЙ КАБИНЕТ =====
+async function loadOperations() {
+    try {
+        const operations = await api('/user/operations');
+        renderOperations(operations);
+    } catch (error) {
+        console.error('Ошибка загрузки истории операций:', error);
+    }
+}
+
+function renderOperations(operations) {
+    const operationsList = document.querySelector('.operations-list');
+    
+    if (!operations || operations.length === 0) {
+        operationsList.innerHTML = `
+            <div class="operation-item">
+                <span class="operation-type">Нет операций</span>
+                <span class="operation-tokens"></span>
+                <span class="operation-date">История пуста</span>
+            </div>
+        `;
+        return;
+    }
+    
+    const typeLabels = {
+        'registration': 'Регистрация',
+        'purchase': 'Покупка токенов',
+        'upload': 'Загрузка проекта',
+        'processing': 'Обработка чертежа'
+    };
+    
+    operationsList.innerHTML = operations.map(op => {
+        const tokensClass = op.tokensChange >= 0 ? 'positive' : 'negative';
+        const tokensPrefix = op.tokensChange >= 0 ? '+' : '';
+        const date = new Date(op.createdAt);
+        const formattedDate = date.toLocaleDateString('ru-RU') + ' ' + date.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+        
+        return `
+            <div class="operation-item">
+                <span class="operation-type">${typeLabels[op.type] || op.type}</span>
+                <span class="operation-tokens ${tokensClass}">${tokensPrefix}${op.tokensChange} токенов</span>
+                <span class="operation-date">${formattedDate}</span>
+            </div>
+        `;
+    }).join('');
+}
+
 async function buyTokens(amount) {
     try {
         const data = await api('/user/buy-tokens', {
@@ -778,6 +825,9 @@ async function buyTokens(amount) {
         
         elements.paymentMessage.textContent = `Успешно добавлено ${amount} токенов!`;
         elements.paymentMessage.className = 'message success';
+        
+        // Обновляем историю операций
+        loadOperations();
         
         setTimeout(() => {
             elements.paymentMessage.classList.add('hidden');

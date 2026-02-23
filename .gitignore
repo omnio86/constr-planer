@@ -47,3 +47,11 @@ temp/
 
 # Optional
 .cache/
+
+# Data files
+server/users.json
+server/projects.json
+server/operations.json
+
+# Uploads
+public/uploads/
