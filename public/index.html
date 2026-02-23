@@ -181,31 +181,39 @@
                 <div id="project-results" class="project-results hidden">
                     <div class="card">
                         <h3>Результаты обработки</h3>
-                        
-                        <!-- Статистика -->
-                        <div class="results-stats">
-                            <div class="stat-card">
-                                <span class="stat-label">Новых стен</span>
-                                <span id="stats-wall-length" class="stat-value">0 м</span>
-                            </div>
-                            <div class="stat-card" id="stats-piles-card" style="display: none;">
-                                <span class="stat-label">Требуется свай</span>
-                                <span id="stats-piles-count" class="stat-value">0 шт</span>
-                            </div>
+
+                        <!-- Сгенерированное изображение -->
+                        <div id="generated-image-container" class="generated-image-section hidden">
+                            <h4>3D-визуализация проекта</h4>
+                            <img id="generated-image" src="" alt="Сгенерированное изображение проекта" class="generated-image">
                         </div>
 
-                        <!-- 3D Визуализация -->
-                        <div class="visualization-section">
-                            <h4>3D Визуализация</h4>
-                            <div id="3d-container" class="visualization-3d"></div>
-                            <div class="visualization-legend">
-                                <div class="legend-item">
-                                    <span class="legend-color" style="background: #FF6B6B;"></span>
-                                    <span>Новые стены</span>
+                        <!-- Статистика -->
+                        <div id="results-stats-section">
+                            <div class="results-stats">
+                                <div class="stat-card">
+                                    <span class="stat-label">Новых стен</span>
+                                    <span id="stats-wall-length" class="stat-value">0 м</span>
                                 </div>
-                                <div class="legend-item">
-                                    <span class="legend-color" style="background: #95A5A6;"></span>
-                                    <span>Существующие стены</span>
+                                <div class="stat-card" id="stats-piles-card" style="display: none;">
+                                    <span class="stat-label">Требуется свай</span>
+                                    <span id="stats-piles-count" class="stat-value">0 шт</span>
+                                </div>
+                            </div>
+
+                            <!-- 3D Визуализация -->
+                            <div class="visualization-section">
+                                <h4>3D Визуализация</h4>
+                                <div id="3d-container" class="visualization-3d"></div>
+                                <div class="visualization-legend">
+                                    <div class="legend-item">
+                                        <span class="legend-color" style="background: #FF6B6B;"></span>
+                                        <span>Новые стены</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-color" style="background: #95A5A6;"></span>
+                                        <span>Существующие стены</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
